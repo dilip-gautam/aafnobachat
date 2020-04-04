@@ -36,6 +36,11 @@ class PayingController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'items' => 'required|max:255',
+            'amount' => 'required|numeric',
+        ]);
+        
         $details = Paying::create([
             'items' => $request->items,
             'amount' => $request->amount,
@@ -51,7 +56,7 @@ class PayingController extends Controller
      */
     public function show(Paying $paying)
     {
-        //
+        return new FormatResource($paying);
     }
 
     /**
@@ -74,7 +79,12 @@ class PayingController extends Controller
      */
     public function update(Request $request, Paying $paying)
     {
-        //
+        $this->validate($request, [
+            'items' => 'required|max:255',
+            'amount' => 'required|numeric',
+        ]);
+        $paying->update($request->only(['items', 'amount']));
+        return new FormatResource($paying);
     }
 
     /**
@@ -85,6 +95,7 @@ class PayingController extends Controller
      */
     public function destroy(Paying $paying)
     {
-        //
+        $paying->delete();
+        return response()->json(null , 204);
     }
 }

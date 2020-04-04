@@ -37,6 +37,11 @@ class EarningController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'items' => 'required|max:255',
+            'amount' => 'required|numeric',
+        ]);
+        
         $details = Earning::create([
         'items' => $request->items,
         'amount' => $request->amount,
@@ -52,7 +57,7 @@ class EarningController extends Controller
      */
     public function show(Earning $earning)
     {
-        //
+        return new FormatResource($earning);
     }
 
     /**
@@ -75,7 +80,12 @@ class EarningController extends Controller
      */
     public function update(Request $request, Earning $earning)
     {
-        //
+         $this->validate($request, [
+            'items' => 'required|max:255',
+            'amount' => 'required|numeric',
+        ]);
+        $earning->update($request->only(['items', 'amount']));
+        return new FormatResource($earning);
     }
 
     /**
@@ -86,6 +96,7 @@ class EarningController extends Controller
      */
     public function destroy(Earning $earning)
     {
-        //
+        $earning->delete();
+        return response()->json(null , 204);
     }
 }

@@ -36,6 +36,11 @@ class ExpenseController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'items' => 'required|max:255',
+            'amount' => 'required|numeric',
+        ]);
+        
         $details = Expense::create([
         'items' => $request->items,
         'amount' => $request->amount,
@@ -51,7 +56,7 @@ class ExpenseController extends Controller
      */
     public function show(Expense $expense)
     {
-        //
+        return new FormatResource($expense);
     }
 
     /**
@@ -74,7 +79,12 @@ class ExpenseController extends Controller
      */
     public function update(Request $request, Expense $expense)
     {
-        //
+        $this->validate($request, [
+            'items' => 'required|max:255',
+            'amount' => 'required|numeric',
+        ]);
+        $expense->update($request->only(['items', 'amount']));
+        return new FormatResource($expense);
     }
 
     /**
@@ -85,6 +95,7 @@ class ExpenseController extends Controller
      */
     public function destroy(Expense $expense)
     {
-        //
+        $expense->delete();
+        return response()->json(null , 204);
     }
 }

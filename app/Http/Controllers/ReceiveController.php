@@ -19,16 +19,6 @@ class ReceiveController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -36,6 +26,11 @@ class ReceiveController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'items' => 'required|max:255',
+            'amount' => 'required|numeric',
+        ]);
+
         $details = Receive::create([
             'items' => $request->items,
             'amount' => $request->amount,
@@ -51,7 +46,7 @@ class ReceiveController extends Controller
      */
     public function show(Receive $receive)
     {
-        //
+        return new FormatResource($receive);
     }
 
     /**
@@ -60,10 +55,6 @@ class ReceiveController extends Controller
      * @param  \App\Receive  $receive
      * @return \Illuminate\Http\Response
      */
-    public function edit(Receive $receive)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -74,7 +65,12 @@ class ReceiveController extends Controller
      */
     public function update(Request $request, Receive $receive)
     {
-        //
+        $this->validate($request, [
+            'items' => 'required|max:255',
+            'amount' => 'required|numeric',
+        ]);
+        $receive->update($request->only(['items', 'amount']));
+        return new FormatResource($receive);
     }
 
     /**
@@ -85,6 +81,7 @@ class ReceiveController extends Controller
      */
     public function destroy(Receive $receive)
     {
-        //
+        $receive->delete();
+        return response()->json(null , 204);
     }
 }
