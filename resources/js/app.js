@@ -12,7 +12,7 @@ Vue.prototype.$http = axios
 
 Vue.use(BootstrapVue)
 
-new Vue({ 
+new Vue({
   router,
   store,
   render: h => h(App)
