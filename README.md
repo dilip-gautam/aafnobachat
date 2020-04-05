@@ -1,6 +1,6 @@
 # AaafnoBachat API
 
-> Laravel 7.x API that uses the API resources.
+ Laravel 7.x API that uses the API resources.
 
 
 ## App Info
