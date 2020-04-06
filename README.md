@@ -1,6 +1,10 @@
 # AafnoBachat
 Daily Expense tracker Site 
 
+**Project Info**
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ## Install on local machine
 
 ``` bash
