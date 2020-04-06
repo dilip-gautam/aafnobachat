@@ -45,7 +45,7 @@
          <expense @totalexpense="expense"></expense>
       </div>
       <div class="row mt-4">
-        <receive @totalreceiving="receiving"></receive>
+        <receive @totalreceive="receiving"></receive>
         <paying @totalpaying="paying"></paying>
       </div>
     </div>

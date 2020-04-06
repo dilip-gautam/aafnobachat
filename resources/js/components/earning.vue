@@ -8,7 +8,7 @@
             <div class="p-2 bd-highlight">Rs {{totalearning}}</div>
             <b-button class="btn btn-success" v-b-modal.modal-1>Add</b-button>
 
-            <b-modal ref="test" id="modal-1" title="Add Details" hide-footer="true">
+            <b-modal ref="test" id="modal-1" title="Add Details">
               <form @submit.prevent="addEarnings">
                 <div class="form-group">
                   <label for="item name">Item Name</label>
@@ -84,10 +84,12 @@ export default {
   mounted(){
     axios.get('/earning')
     .then(response => {
+      console.log(response.data.data)
       response.data.data.map(element=>
       this.earning.push(element));
     })
   }
+  
 };
 </script>
 
