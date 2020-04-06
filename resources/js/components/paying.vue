@@ -9,7 +9,7 @@
             <div class="p-2 bd-highlight">Rs {{totalpaying}}</div>
             <b-button class="btn btn-success" v-b-modal.modal-3>Add</b-button>
 
-            <b-modal id="modal-4" hide-footer="true" title="Add Details">
+            <b-modal id="modal-4" title="Add Details">
               <form @submit.prevent="addpayings">
                 <div class="form-group">
                   <label for="item name">Item Name</label>
@@ -30,7 +30,7 @@
           </div>
         </h5>
         <div class="d-flex justify-content-between" v-for="data in paying" :key="data.id">
-          <div class="p-2 bd-highlight">{{ data.detail }}</div>
+          <div class="p-2 bd-highlight">{{ data.items }}</div>
           <div class="p-2 bd-highlight">{{ data.amount }}</div>
         </div>
       </div>
@@ -39,54 +39,48 @@
 </template>
 
 <script>
+import axios from '../axios/axios'
+
 export default {
   data() {
     return {
-      payingdetail: "",
-      payingamount: "",
-      paying: [
-        {
-          id: 1,
-          detail: "Bishal Gaire",
-          amount: 250,
-          date: Date.now()
-        },
-        {
-          id: 2,
-          detail: "Ankit Karki",
-          amount: 150,
-          date: Date.now()
-        },
-        {
-          id: 3,
-          detail: "Alima Subedi",
-          amount: 100,
-          date: Date.now()
-        }
-      ]
+      paying: [],
+      payingdetail: null,
+      payingamount: null,
     };
   },
   methods: {
     addpayings() {
-      console.log(this.payingdetail);
-      console.log(typeof this.payingamount);
-      this.paying.push({
-        id: 1,
-        detail: this.payingdetail,
-        amount: parseInt(this.payingamount, 10),
-        date: Date.now()
+      axios.post('/paying',{
+        items: this.payingdetail,
+        amount: this.payingamount,
+      })
+      .then(response => {
+        console.log(response);
       });
+      (this.payingdetail = null), (this.payingamount = null);
+    },
+    hideModal() {
+      this.$refs["test"].hide();
     }
   },
   computed: {
     totalpaying() {
       let total = 0;
-      this.paying.forEach(data => {
+      this.paying.map(data => {
         total += data.amount;
       });
-      this.$emit('totalpaying',total);
+      this.$emit("totalpaying", total);
       return total;
     }
+  },
+  watch: {},
+  mounted(){
+    axios.get('/paying')
+    .then(response => {
+      response.data.map(element=>
+      this.paying.push(element));
+    })
   }
 };
 </script>

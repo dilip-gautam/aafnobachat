@@ -2025,6 +2025,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     _axios_axios__WEBPACK_IMPORTED_MODULE_0__["default"].get('/earning').then(function (response) {
+      console.log(response.data.data);
       response.data.data.map(function (element) {
         return _this.earning.push(element);
       });
@@ -2043,91 +2044,88 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+/* harmony import */ var _axios_axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../axios/axios */ "./resources/js/axios/axios.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      expensedetail: "",
-      expenseamount: "",
-      expense: [{
-        id: 1,
-        detail: "Transcript nikalda",
-        amount: 700,
-        date: Date.now()
-      }, {
-        id: 2,
-        detail: "khaja",
-        amount: 300,
-        date: Date.now()
-      }, {
-        id: 3,
-        detail: "scooty servicing",
-        amount: 300,
-        date: Date.now()
-      }]
+      expense: [],
+      expensedetail: null,
+      expenseamount: null
     };
   },
   methods: {
     addexpenses: function addexpenses() {
-      console.log(this.expensedetail);
-      console.log(_typeof(this.expenseamount));
-      this.expense.push({
-        id: 1,
-        detail: this.expensedetail,
-        amount: parseInt(this.expenseamount, 10),
-        date: Date.now()
+      _axios_axios__WEBPACK_IMPORTED_MODULE_0__["default"].post('/expense', {
+        items: this.expensedetail,
+        amount: this.expenseamount
+      }).then(function (response) {
+        console.log(response);
       });
+      this.expensedetail = null, this.expenseamount = null;
+    },
+    hideModal: function hideModal() {
+      this.$refs["test"].hide();
     }
   },
   computed: {
     totalexpense: function totalexpense() {
       var total = 0;
-      this.expense.forEach(function (data) {
+      this.expense.map(function (data) {
         total += data.amount;
       });
-      this.$emit('totalexpense', total);
+      this.$emit("totalexpense", total);
       return total;
     }
+  },
+  watch: {},
+  mounted: function mounted() {
+    var _this = this;
+
+    _axios_axios__WEBPACK_IMPORTED_MODULE_0__["default"].get('/expense').then(function (response) {
+      response.data.forEach(function (element) {
+        _this.expense.push(element);
+      });
+    });
   }
 });
 
@@ -2142,92 +2140,89 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+/* harmony import */ var _axios_axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../axios/axios */ "./resources/js/axios/axios.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      payingdetail: "",
-      payingamount: "",
-      paying: [{
-        id: 1,
-        detail: "Bishal Gaire",
-        amount: 250,
-        date: Date.now()
-      }, {
-        id: 2,
-        detail: "Ankit Karki",
-        amount: 150,
-        date: Date.now()
-      }, {
-        id: 3,
-        detail: "Alima Subedi",
-        amount: 100,
-        date: Date.now()
-      }]
+      paying: [],
+      payingdetail: null,
+      payingamount: null
     };
   },
   methods: {
     addpayings: function addpayings() {
-      console.log(this.payingdetail);
-      console.log(_typeof(this.payingamount));
-      this.paying.push({
-        id: 1,
-        detail: this.payingdetail,
-        amount: parseInt(this.payingamount, 10),
-        date: Date.now()
+      _axios_axios__WEBPACK_IMPORTED_MODULE_0__["default"].post('/paying', {
+        items: this.payingdetail,
+        amount: this.payingamount
+      }).then(function (response) {
+        console.log(response);
       });
+      this.payingdetail = null, this.payingamount = null;
+    },
+    hideModal: function hideModal() {
+      this.$refs["test"].hide();
     }
   },
   computed: {
     totalpaying: function totalpaying() {
       var total = 0;
-      this.paying.forEach(function (data) {
+      this.paying.map(function (data) {
         total += data.amount;
       });
-      this.$emit('totalpaying', total);
+      this.$emit("totalpaying", total);
       return total;
     }
+  },
+  watch: {},
+  mounted: function mounted() {
+    var _this = this;
+
+    _axios_axios__WEBPACK_IMPORTED_MODULE_0__["default"].get('/paying').then(function (response) {
+      response.data.map(function (element) {
+        return _this.paying.push(element);
+      });
+    });
   }
 });
 
@@ -2242,94 +2237,88 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+/* harmony import */ var _axios_axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../axios/axios */ "./resources/js/axios/axios.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      reveivedetail: "",
-      reveiveamount: "",
-      reveive: [{
-        id: 1,
-        detail: "Hemant Dai",
-        amount: 1500,
-        date: Date.now()
-      }, {
-        id: 2,
-        detail: "Dilip Gautam",
-        amount: 800,
-        date: Date.now()
-      }, {
-        id: 3,
-        detail: "Jitendra Sharma",
-        amount: 700,
-        date: Date.now()
-      }]
+      receive: [],
+      receivedetail: null,
+      receiveamount: null
     };
   },
   methods: {
-    addreveives: function addreveives() {
-      console.log(this.reveivedetail);
-      console.log(_typeof(this.reveiveamount));
-      this.reveive.push({
-        id: 1,
-        detail: this.reveivedetail,
-        amount: parseInt(this.reveiveamount, 10),
-        date: Date.now()
+    addreceives: function addreceives() {
+      _axios_axios__WEBPACK_IMPORTED_MODULE_0__["default"].post('/receive', {
+        items: this.receivedetail,
+        amount: this.receiveamount
+      }).then(function (response) {
+        console.log(response);
       });
+      this.receivedetail = null, this.receiveamount = null;
+    },
+    hideModal: function hideModal() {
+      this.$refs["test"].hide();
     }
   },
   computed: {
-    totalreveive: function totalreveive() {
-      var _this = this;
-
+    totalreceive: function totalreceive() {
       var total = 0;
-      this.reveive.forEach(function (data) {
+      this.receive.map(function (data) {
         total += data.amount;
-
-        _this.$emit('totalreceiving', total);
       });
+      this.$emit("totalreceive", total);
       return total;
     }
+  },
+  watch: {},
+  mounted: function mounted() {
+    var _this = this;
+
+    _axios_axios__WEBPACK_IMPORTED_MODULE_0__["default"].get('/receive').then(function (response) {
+      response.data.map(function (element) {
+        return _this.receive.push(element);
+      });
+    });
   }
 });
 
@@ -46656,11 +46645,7 @@ var render = function() {
                   "b-modal",
                   {
                     ref: "test",
-                    attrs: {
-                      id: "modal-1",
-                      title: "Add Details",
-                      "hide-footer": "true"
-                    }
+                    attrs: { id: "modal-1", title: "Add Details" }
                   },
                   [
                     _c(
@@ -46835,13 +46820,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "b-modal",
-                  {
-                    attrs: {
-                      id: "modal-2",
-                      "hide-footer": "true",
-                      title: "Add Details"
-                    }
-                  },
+                  { attrs: { id: "modal-2", title: "Add Details" } },
                   [
                     _c(
                       "form",
@@ -46933,7 +46912,7 @@ var render = function() {
               { key: data.id, staticClass: "d-flex justify-content-between" },
               [
                 _c("div", { staticClass: "p-2 bd-highlight" }, [
-                  _vm._v(_vm._s(data.detail))
+                  _vm._v(_vm._s(data.items))
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "p-2 bd-highlight" }, [
@@ -47006,13 +46985,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "b-modal",
-                  {
-                    attrs: {
-                      id: "modal-4",
-                      "hide-footer": "true",
-                      title: "Add Details"
-                    }
-                  },
+                  { attrs: { id: "modal-4", title: "Add Details" } },
                   [
                     _c(
                       "form",
@@ -47104,7 +47077,7 @@ var render = function() {
               { key: data.id, staticClass: "d-flex justify-content-between" },
               [
                 _c("div", { staticClass: "p-2 bd-highlight" }, [
-                  _vm._v(_vm._s(data.detail))
+                  _vm._v(_vm._s(data.items))
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "p-2 bd-highlight" }, [
@@ -47149,7 +47122,7 @@ var render = function() {
         [
           _c("h5", { staticClass: "d-flex justify-content-between" }, [
             _c("div", { staticClass: "p-2 bd-highlight" }, [
-              _vm._v("reveives Detail")
+              _vm._v("receives Detail")
             ]),
             _vm._v(" "),
             _c(
@@ -47157,7 +47130,7 @@ var render = function() {
               { staticClass: "d-flex" },
               [
                 _c("div", { staticClass: "p-2 bd-highlight" }, [
-                  _vm._v("Rs " + _vm._s(_vm.totalreveive))
+                  _vm._v("Rs " + _vm._s(_vm.totalreceive))
                 ]),
                 _vm._v(" "),
                 _c(
@@ -47177,13 +47150,7 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "b-modal",
-                  {
-                    attrs: {
-                      id: "modal-3",
-                      "hide-footer": "true",
-                      title: "Add Details"
-                    }
-                  },
+                  { attrs: { id: "modal-3", title: "Add Details" } },
                   [
                     _c(
                       "form",
@@ -47191,7 +47158,7 @@ var render = function() {
                         on: {
                           submit: function($event) {
                             $event.preventDefault()
-                            return _vm.addreveives($event)
+                            return _vm.addreceives($event)
                           }
                         }
                       },
@@ -47206,19 +47173,19 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.reveivedetail,
-                                expression: "reveivedetail"
+                                value: _vm.receivedetail,
+                                expression: "receivedetail"
                               }
                             ],
                             staticClass: "form-control",
                             attrs: { type: "text", id: "item name" },
-                            domProps: { value: _vm.reveivedetail },
+                            domProps: { value: _vm.receivedetail },
                             on: {
                               input: function($event) {
                                 if ($event.target.composing) {
                                   return
                                 }
-                                _vm.reveivedetail = $event.target.value
+                                _vm.receivedetail = $event.target.value
                               }
                             }
                           })
@@ -47234,19 +47201,19 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.reveiveamount,
-                                expression: "reveiveamount"
+                                value: _vm.receiveamount,
+                                expression: "receiveamount"
                               }
                             ],
                             staticClass: "form-control",
-                            attrs: { type: "number", id: "reveiveamount" },
-                            domProps: { value: _vm.reveiveamount },
+                            attrs: { type: "number", id: "receiveamount" },
+                            domProps: { value: _vm.receiveamount },
                             on: {
                               input: function($event) {
                                 if ($event.target.composing) {
                                   return
                                 }
-                                _vm.reveiveamount = $event.target.value
+                                _vm.receiveamount = $event.target.value
                               }
                             }
                           })
@@ -47269,13 +47236,13 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _vm._l(_vm.reveive, function(data) {
+          _vm._l(_vm.receive, function(data) {
             return _c(
               "div",
               { key: data.id, staticClass: "d-flex justify-content-between" },
               [
                 _c("div", { staticClass: "p-2 bd-highlight" }, [
-                  _vm._v(_vm._s(data.detail))
+                  _vm._v(_vm._s(data.items))
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "p-2 bd-highlight" }, [
@@ -47387,7 +47354,7 @@ var render = function() {
         "div",
         { staticClass: "row mt-4" },
         [
-          _c("receive", { on: { totalreceiving: _vm.receiving } }),
+          _c("receive", { on: { totalreceive: _vm.receiving } }),
           _vm._v(" "),
           _c("paying", { on: { totalpaying: _vm.paying } })
         ],
@@ -63654,8 +63621,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
 var instance = axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({
-  baseURL: 'http://127.0.0.1:8000/api/',
-  timeout: 1000
+  baseURL: 'https://aqueous-tor-49981.herokuapp.com/api/'
 });
 /* harmony default export */ __webpack_exports__["default"] = (instance);
 
@@ -63977,11 +63943,11 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__["default"]);
-/* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
+/* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {},
   mutations: {},
   actions: {},
