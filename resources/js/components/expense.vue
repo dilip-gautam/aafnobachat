@@ -1,14 +1,14 @@
 <template>
   <div class="col">
-    <div class="card">
+    <div class="card shadow expense-card mt-2">
       <div class="card-body">
         <h5 class="d-flex justify-content-between">
-          <div class="p-2 bd-highlight">expenses Detail</div>
+          <div class="card-title p-2 bd-highlight">Expenses Detail</div>
           <div class="d-flex">
-            <div class="p-2 bd-highlight">Rs {{totalexpense}}</div>
-            <b-button class="btn btn-success" v-b-modal.modal-2>Add</b-button>
+            <div class="card-total p-2 bd-highlight">Rs {{totalexpense}}</div>
+            <b-button class="btn btn-info btn-add" v-b-modal.modal-2>Add</b-button>
 
-            <b-modal id="modal-2" title="Add Details">
+            <b-modal id="modal-2" hide-footer title="Add Details">
               <form @submit.prevent="addexpenses">
                 <div class="form-group">
                   <label for="item name">Item Name</label>
@@ -28,9 +28,13 @@
             </b-modal>
           </div>
         </h5>
-        <div class="d-flex justify-content-between" v-for="data in expense" :key="data.id">
-          <div class="p-2 bd-highlight">{{ data.items }}</div>
-          <div class="p-2 bd-highlight">{{ data.amount }}</div>
+        <div v-for="data in expense" :key="data.id">
+          <div class="d-flex justify-content-between">
+            <div class="p-2 bd-highlight">{{ data.items }}</div>
+            <div class="p-2 bd-highlight">{{ data.amount }}</div>
+          </div>
+          <span class="trans-date">{{ new Date(data.created_at) | formatDate }}</span>
+          <hr>
         </div>
       </div>
     </div>
@@ -38,25 +42,26 @@
 </template>
 
 <script>
-import axios from '../axios/axios'
+import axios from "../axios/axios";
 
 export default {
-    data() {
+  data() {
     return {
       expense: [],
       expensedetail: null,
-      expenseamount: null,
+      expenseamount: null
     };
   },
   methods: {
     addexpenses() {
-      axios.post('/expense',{
-        items: this.expensedetail,
-        amount: this.expenseamount,
-      })
-      .then(response => {
-        console.log(response);
-      });
+      axios
+        .post("/expense", {
+          items: this.expensedetail,
+          amount: this.expenseamount
+        })
+        .then(response => {
+          console.log(response);
+        });
       (this.expensedetail = null), (this.expenseamount = null);
     },
     hideModal() {
@@ -74,18 +79,18 @@ export default {
     }
   },
   watch: {},
-  mounted(){
-    axios.get('/expense')
-    .then(response => {
-     response.data.forEach(element => {
-       this.expense.push(element);
-     });
-       
-     });
+  mounted() {
+    axios.get("/expense").then(response => {
+      response.data.forEach(element => {
+        this.expense.push(element);
+      });
+    });
   }
-
 };
 </script>
 
-<style>
+<style scoped>
+.expense-card {
+  border-top: 9px solid rgb(241, 41, 68, 0.25);
+}
 </style>
