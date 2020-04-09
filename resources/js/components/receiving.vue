@@ -1,14 +1,14 @@
 <template>
   <div class="col">
-    <div class="card">
+    <div class="card shadow receiving-card">
       <div class="card-body">
         <h5 class="d-flex justify-content-between">
-          <div class="p-2 bd-highlight">receives Detail</div>
+          <div class="card-title p-2 bd-highlight">Receive Detail</div>
           <div class="d-flex">
-            <div class="p-2 bd-highlight">Rs {{totalreceive}}</div>
-            <b-button class="btn btn-success" v-b-modal.modal-3>Add</b-button>
+            <div class="card-total p-2 bd-highlight">Rs {{totalreceive}}</div>
+            <b-button class="btn btn-info btn-add" v-b-modal.modal-3>Add</b-button>
 
-            <b-modal id="modal-3" title="Add Details">
+            <b-modal id="modal-3" hide-footer title="Add Details">
               <form @submit.prevent="addreceives">
                 <div class="form-group">
                   <label for="item name">Item Name</label>
@@ -28,9 +28,13 @@
             </b-modal>
           </div>
         </h5>
-        <div class="d-flex justify-content-between" v-for="data in receive" :key="data.id">
-          <div class="p-2 bd-highlight">{{ data.items }}</div>
-          <div class="p-2 bd-highlight">{{ data.amount }}</div>
+        <div v-for="data in receive" :key="data.id">
+          <div class="d-flex justify-content-between">
+            <div class="p-2 bd-highlight">{{ data.items }}</div>
+            <div class="p-2 bd-highlight">{{ data.amount }}</div>
+          </div>
+          <span class="trans-date">{{ new Date(data.created_at) | formatDate }}</span>
+          <hr />
         </div>
       </div>
     </div>
@@ -38,25 +42,26 @@
 </template>
 
 <script>
-import axios from '../axios/axios'
+import axios from "../axios/axios";
 
 export default {
   data() {
     return {
       receive: [],
       receivedetail: null,
-      receiveamount: null,
+      receiveamount: null
     };
   },
   methods: {
     addreceives() {
-      axios.post('/receive',{
-        items: this.receivedetail,
-        amount: this.receiveamount,
-      })
-      .then(response => {
-        console.log(response);
-      });
+      axios
+        .post("/receive", {
+          items: this.receivedetail,
+          amount: this.receiveamount
+        })
+        .then(response => {
+          console.log(response);
+        });
       (this.receivedetail = null), (this.receiveamount = null);
     },
     hideModal() {
@@ -74,15 +79,16 @@ export default {
     }
   },
   watch: {},
-  mounted(){
-    axios.get('/receive')
-    .then(response => {
-      response.data.map(element=>
-      this.receive.push(element));
-    })
+  mounted() {
+    axios.get("/receive").then(response => {
+      response.data.map(element => this.receive.push(element));
+    });
   }
 };
 </script>
 
-<style>
+<style scoped>
+.receiving-card {
+  border-top: 9px solid rgb(241, 188, 41, 0.25);
+}
 </style>
