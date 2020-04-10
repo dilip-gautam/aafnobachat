@@ -29,7 +29,7 @@
                     required
                   />
                 </div>
-                <button type="submit" class="btn btn-primary" @click="hideModal" >Submit</button>
+                <button type="submit" class="btn btn-primary" @click="hideModal">Submit</button>
               </form>
             </b-modal>
           </div>
@@ -39,8 +39,13 @@
             <span>{{ data.item }}</span>
             <span>{{ data.amount | toCurrency }}</span>
           </div>
+          <div class="d-flex justify-content-between">
             <span class="trans-date">{{ new Date(data.created_at) | formatDate }}</span>
-          <hr>
+            <a @click="deleteItem(data.id)">
+              <font-awesome-icon icon="trash" />
+            </a>
+          </div>
+          <hr />
         </div>
       </div>
     </div>
@@ -55,7 +60,7 @@ export default {
     return {
       earning: [],
       earningdetail: null,
-      earningamount: null,
+      earningamount: null
     };
   },
   methods: {
@@ -66,13 +71,22 @@ export default {
           amount: this.earningamount
         })
         .then(response => {
-          this.$parent.rerun()
+          this.$parent.rerun();
         });
       (this.earningdetail = null), (this.earningamount = null);
     },
     hideModal() {
       this.$refs["test"].hide();
     },
+    deleteItem(value) {
+      axios.delete("/earning/" + value).then(response => {
+        this.earning.map((element, index) => {
+          if (element.id == value) {
+            this.earning.splice(index, 1);
+          }
+        });
+      });
+    }
   },
   computed: {
     totalearning() {
@@ -98,6 +112,4 @@ export default {
 .earning-card {
   border-top: 9px solid rgb(26, 139, 86, 0.25);
 }
-
-
 </style>

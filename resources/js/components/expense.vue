@@ -30,11 +30,16 @@
         </h5>
         <div v-for="data in expense" :key="data.id">
           <div class="d-flex justify-content-between">
-            <div class="p-2 bd-highlight">{{ data.items }}</div>
-            <div class="p-2 bd-highlight">{{ data.amount | toCurrency }}</div>
+            <span>{{ data.items }}</span>
+            <span>{{ data.amount | toCurrency }}</span>
           </div>
-          <span class="trans-date">{{ new Date(data.created_at) | formatDate }}</span>
-          <hr>
+          <div class="d-flex justify-content-between">
+            <span class="trans-date">{{ new Date(data.created_at) | formatDate }}</span>
+            <a @click="deleteExpense(data.id)">
+              <font-awesome-icon icon="trash" />
+            </a>
+          </div>
+          <hr />
         </div>
       </div>
     </div>
@@ -60,12 +65,21 @@ export default {
           amount: this.expenseamount
         })
         .then(response => {
-          this.$parent.rerun()
+          this.$parent.rerun();
         });
       (this.expensedetail = null), (this.expenseamount = null);
     },
     hideModal() {
       this.$refs["test"].hide();
+    },
+    deleteExpense(value) {
+      axios.delete("/expense/" + value).then(response => {
+        this.expense.map((element, index) => {
+          if (element.id == value) {
+            this.expense.splice(index, 1);
+          }
+        });
+      });
     }
   },
   computed: {
@@ -76,6 +90,15 @@ export default {
       });
       this.$emit("totalexpense", total);
       return total;
+    },
+    deleteItem(value) {
+      axios.delete("/earning/" + value).then(response => {
+        this.earning.map((element, index) => {
+          if (element.id == value) {
+            this.earning.splice(index, 1);
+          }
+        });
+      });
     }
   },
   watch: {},

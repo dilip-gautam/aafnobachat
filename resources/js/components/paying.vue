@@ -34,8 +34,13 @@
             <div class="p-2 bd-highlight">{{ data.items }}</div>
             <div class="p-2 bd-highlight">{{ data.amount | toCurrency }}</div>
           </div>
-          <span class="trans-date">{{ new Date(data.created_at) | formatDate }}</span>
-          <hr/>
+          <div class="d-flex justify-content-between">
+            <span class="trans-date">{{ new Date(data.created_at) | formatDate }}</span>
+            <a @click="deletePaying(data.id)">
+              <font-awesome-icon icon="trash" />
+            </a>
+          </div>
+          <hr />
         </div>
       </div>
     </div>
@@ -61,12 +66,21 @@ export default {
           amount: this.payingamount
         })
         .then(response => {
-         this.$parent.rerun();
+          this.$parent.rerun();
         });
       (this.payingdetail = null), (this.payingamount = null);
     },
     hideModal() {
       this.$refs["test"].hide();
+    },
+    deletePaying(value) {
+      axios.delete("/paying/" + value).then(response => {
+        this.paying.map((element, index) => {
+          if (element.id == value) {
+            this.paying.splice(index, 1);
+          }
+        });
+      });
     }
   },
   computed: {

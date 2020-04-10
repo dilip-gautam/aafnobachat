@@ -33,7 +33,12 @@
             <div class="p-2 bd-highlight">{{ data.items }}</div>
             <div class="p-2 bd-highlight">{{ data.amount | toCurrency }}</div>
           </div>
-          <span class="trans-date">{{ new Date(data.created_at) | formatDate }}</span>
+          <div class="d-flex justify-content-between">
+            <span class="trans-date">{{ new Date(data.created_at) | formatDate }}</span>
+            <a @click="deleteReceive(data.id)">
+              <font-awesome-icon icon="trash" />
+            </a>
+          </div>
           <hr />
         </div>
       </div>
@@ -66,6 +71,15 @@ export default {
     },
     hideModal() {
       this.$refs["test"].hide();
+    },
+    deleteReceive(value) {
+      axios.delete("/receive/" + value).then(response => {
+        this.receive.map((element, index) => {
+          if (element.id == value) {
+            this.receive.splice(index, 1);
+          }
+        });
+      });
     }
   },
   computed: {
@@ -76,7 +90,8 @@ export default {
       });
       this.$emit("totalreceive", total);
       return total;
-    }
+    },
+    
   },
   watch: {},
   mounted() {
