@@ -93,6 +93,6 @@ class EarningController extends Controller
     public function destroy(Earning $earning)
     {
         $earning->delete();
-        return response()->json(null , 204);
+        return new FormatResource($earning);
     }
 }
