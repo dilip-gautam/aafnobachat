@@ -29,7 +29,7 @@
                     required
                   />
                 </div>
-                <button type="submit" class="btn btn-primary" @click="hideModal">Submit</button>
+                <button type="submit" class="btn btn-primary" @click="hideModal" >Submit</button>
               </form>
             </b-modal>
           </div>
@@ -37,7 +37,7 @@
         <div v-for="data in earning" :key="data.id">
           <div class="d-flex justify-content-between">
             <span>{{ data.item }}</span>
-            <span>{{ data.amount }}</span>
+            <span>{{ data.amount | toCurrency }}</span>
           </div>
             <span class="trans-date">{{ new Date(data.created_at) | formatDate }}</span>
           <hr>
@@ -55,7 +55,7 @@ export default {
     return {
       earning: [],
       earningdetail: null,
-      earningamount: null
+      earningamount: null,
     };
   },
   methods: {
@@ -66,13 +66,14 @@ export default {
           amount: this.earningamount
         })
         .then(response => {
-          console.log(response);
+          // this.$parent.rerun()
+          vm.$forceupdate();
         });
       (this.earningdetail = null), (this.earningamount = null);
     },
     hideModal() {
       this.$refs["test"].hide();
-    }
+    },
   },
   computed: {
     totalearning() {

@@ -14,8 +14,8 @@
           <div id="wallet-pic">
             <img src="../assets/img/wallet.png" alt />
           </div>
-          <span style="font-size: 37px;">Rs</span>
-          {{ walletmoney }}
+          <span style="font-size: 37px;"></span>
+          {{ walletmoney | toCurrency }}
         </div>
       </div>
     </div>
@@ -24,40 +24,36 @@
       <div class="col-md-3 col-sm-6">
         <div class="insight-card ic-exp">
           <span class="amt">
-            <span class="rs">Rs.</span>
-            {{ totalexpense }}
+            {{ totalexpense | toCurrency }}
           </span>
-          <span class="title">Expense</span>
+          <span class="title mt-3">Expense</span>
           <div class="icon"></div>
         </div>
       </div>
       <div class="col-md-3 col-sm-6">
         <div class="insight-card ic-ear">
           <span class="amt">
-            <span class="rs">Rs.</span>
-            {{ totalearning }}
+            {{ totalearning | toCurrency }}
           </span>
-          <span class="title">Earning</span>
+          <span class="title mt-3">Earning</span>
           <div class="icon"></div>
         </div>
       </div>
       <div class="col-md-3 col-sm-6">
         <div class="insight-card ic-rec">
           <span class="amt">
-            <span class="rs">Rs.</span>
-            {{ totalreceiving }}
+            {{ totalreceiving | toCurrency }}
           </span>
-          <span class="title">Receiving</span>
+          <span class="title mt-3">Receiving</span>
           <div class="icon"></div>
         </div>
       </div>
       <div class="col-md-3 col-sm-6">
         <div class="insight-card ic-pay">
           <span class="amt">
-            <span class="rs">Rs.</span>
-            {{ totalpaying }}
+            {{ totalpaying | toCurrency }}
           </span>
-          <span class="title">Paying</span>
+          <span class="title mt-3">Paying</span>
           <div class="icon"></div>
         </div>
       </div>
@@ -104,12 +100,12 @@
     </div>-->
     <div class="container mt-4">
       <div class="row">
-        <earning @totalearning="earning"></earning>
-        <expense @totalexpense="expense"></expense>
+        <earning @totalearning="earning" :key="index"></earning>
+        <expense @totalexpense="expense" :key="index"></expense>
       </div>
       <div class="row">
-        <receive @totalreceive="receiving"></receive>
-        <paying @totalpaying="paying"></paying>
+        <receive @totalreceive="receiving" :key="index"></receive>
+        <paying @totalpaying="paying" :key="index"></paying>
       </div>
     </div>
   </div>
@@ -128,6 +124,7 @@ export default {
   },
   data() {
     return {
+      index: 0,
       totalearning: "",
       totalexpense: "",
       totalreceiving: "",
@@ -146,6 +143,9 @@ export default {
     },
     paying(e) {
       this.totalpaying = parseInt(e, 10);
+    },
+    rerun() {
+      this.index += 1;
     }
   },
   computed: {

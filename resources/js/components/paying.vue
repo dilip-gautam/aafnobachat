@@ -32,7 +32,7 @@
         <div v-for="data in paying" :key="data.id">
           <div class="d-flex justify-content-between">
             <div class="p-2 bd-highlight">{{ data.items }}</div>
-            <div class="p-2 bd-highlight">{{ data.amount }}</div>
+            <div class="p-2 bd-highlight">{{ data.amount | toCurrency }}</div>
           </div>
           <span class="trans-date">{{ new Date(data.created_at) | formatDate }}</span>
           <hr/>
@@ -61,7 +61,7 @@ export default {
           amount: this.payingamount
         })
         .then(response => {
-          console.log(response);
+         this.$parent.rerun();
         });
       (this.payingdetail = null), (this.payingamount = null);
     },

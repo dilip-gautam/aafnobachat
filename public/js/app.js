@@ -2005,7 +2005,8 @@ __webpack_require__.r(__webpack_exports__);
         items: this.earningdetail,
         amount: this.earningamount
       }).then(function (response) {
-        console.log(response);
+        // this.$parent.rerun()
+        vm.$forceupdate();
       });
       this.earningdetail = null, this.earningamount = null;
     },
@@ -2102,11 +2103,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     addexpenses: function addexpenses() {
+      var _this = this;
+
       _axios_axios__WEBPACK_IMPORTED_MODULE_0__["default"].post("/expense", {
         items: this.expensedetail,
         amount: this.expenseamount
       }).then(function (response) {
-        console.log(response);
+        _this.$parent.rerun();
       });
       this.expensedetail = null, this.expenseamount = null;
     },
@@ -2126,11 +2129,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   watch: {},
   mounted: function mounted() {
-    var _this = this;
+    var _this2 = this;
 
     _axios_axios__WEBPACK_IMPORTED_MODULE_0__["default"].get("/expense").then(function (response) {
       response.data.forEach(function (element) {
-        _this.expense.push(element);
+        _this2.expense.push(element);
       });
     });
   }
@@ -2203,11 +2206,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     addpayings: function addpayings() {
+      var _this = this;
+
       _axios_axios__WEBPACK_IMPORTED_MODULE_0__["default"].post("/paying", {
         items: this.payingdetail,
         amount: this.payingamount
       }).then(function (response) {
-        console.log(response);
+        _this.$parent.rerun();
       });
       this.payingdetail = null, this.payingamount = null;
     },
@@ -2227,11 +2232,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   watch: {},
   mounted: function mounted() {
-    var _this = this;
+    var _this2 = this;
 
     _axios_axios__WEBPACK_IMPORTED_MODULE_0__["default"].get("/paying").then(function (response) {
       response.data.map(function (element) {
-        return _this.paying.push(element);
+        return _this2.paying.push(element);
       });
     });
   }
@@ -2303,11 +2308,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     addreceives: function addreceives() {
+      var _this = this;
+
       _axios_axios__WEBPACK_IMPORTED_MODULE_0__["default"].post("/receive", {
         items: this.receivedetail,
         amount: this.receiveamount
       }).then(function (response) {
-        console.log(response);
+        _this.$parent.rerun();
       });
       this.receivedetail = null, this.receiveamount = null;
     },
@@ -2327,11 +2334,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   watch: {},
   mounted: function mounted() {
-    var _this = this;
+    var _this2 = this;
 
     _axios_axios__WEBPACK_IMPORTED_MODULE_0__["default"].get("/receive").then(function (response) {
       response.data.map(function (element) {
-        return _this.receive.push(element);
+        return _this2.receive.push(element);
       });
     });
   }
@@ -2464,10 +2471,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 
 
@@ -2481,6 +2484,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      index: 0,
       totalearning: "",
       totalexpense: "",
       totalreceiving: "",
@@ -2499,6 +2503,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     paying: function paying(e) {
       this.totalpaying = parseInt(e, 10);
+    },
+    rerun: function rerun() {
+      this.index += 1;
     }
   },
   computed: {
@@ -64726,7 +64733,7 @@ var render = function() {
               _c("div", { staticClass: "d-flex justify-content-between" }, [
                 _c("span", [_vm._v(_vm._s(data.item))]),
                 _vm._v(" "),
-                _c("span", [_vm._v(_vm._s(data.amount))])
+                _c("span", [_vm._v(_vm._s(_vm._f("toCurrency")(data.amount)))])
               ]),
               _vm._v(" "),
               _c("span", { staticClass: "trans-date" }, [
@@ -64900,7 +64907,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "p-2 bd-highlight" }, [
-                  _vm._v(_vm._s(data.amount))
+                  _vm._v(_vm._s(_vm._f("toCurrency")(data.amount)))
                 ])
               ]),
               _vm._v(" "),
@@ -65075,7 +65082,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "p-2 bd-highlight" }, [
-                  _vm._v(_vm._s(data.amount))
+                  _vm._v(_vm._s(_vm._f("toCurrency")(data.amount)))
                 ])
               ]),
               _vm._v(" "),
@@ -65250,7 +65257,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "p-2 bd-highlight" }, [
-                  _vm._v(_vm._s(data.amount))
+                  _vm._v(_vm._s(_vm._f("toCurrency")(data.amount)))
                 ])
               ]),
               _vm._v(" "),
@@ -65302,10 +65309,12 @@ var render = function() {
           _c("div", { staticClass: "insight-box" }, [
             _vm._m(1),
             _vm._v(" "),
-            _c("span", { staticStyle: { "font-size": "37px" } }, [
-              _vm._v("Rs")
-            ]),
-            _vm._v("\n        " + _vm._s(_vm.walletmoney) + "\n      ")
+            _c("span", { staticStyle: { "font-size": "37px" } }),
+            _vm._v(
+              "\n        " +
+                _vm._s(_vm._f("toCurrency")(_vm.walletmoney)) +
+                "\n      "
+            )
           ])
         ]
       )
@@ -65315,11 +65324,14 @@ var render = function() {
       _c("div", { staticClass: "col-md-3 col-sm-6" }, [
         _c("div", { staticClass: "insight-card ic-exp" }, [
           _c("span", { staticClass: "amt" }, [
-            _c("span", { staticClass: "rs" }, [_vm._v("Rs.")]),
-            _vm._v("\n          " + _vm._s(_vm.totalexpense) + "\n        ")
+            _vm._v(
+              "\n          " +
+                _vm._s(_vm._f("toCurrency")(_vm.totalexpense)) +
+                "\n        "
+            )
           ]),
           _vm._v(" "),
-          _c("span", { staticClass: "title" }, [_vm._v("Expense")]),
+          _c("span", { staticClass: "title mt-3" }, [_vm._v("Expense")]),
           _vm._v(" "),
           _c("div", { staticClass: "icon" })
         ])
@@ -65328,11 +65340,14 @@ var render = function() {
       _c("div", { staticClass: "col-md-3 col-sm-6" }, [
         _c("div", { staticClass: "insight-card ic-ear" }, [
           _c("span", { staticClass: "amt" }, [
-            _c("span", { staticClass: "rs" }, [_vm._v("Rs.")]),
-            _vm._v("\n          " + _vm._s(_vm.totalearning) + "\n        ")
+            _vm._v(
+              "\n          " +
+                _vm._s(_vm._f("toCurrency")(_vm.totalearning)) +
+                "\n        "
+            )
           ]),
           _vm._v(" "),
-          _c("span", { staticClass: "title" }, [_vm._v("Earning")]),
+          _c("span", { staticClass: "title mt-3" }, [_vm._v("Earning")]),
           _vm._v(" "),
           _c("div", { staticClass: "icon" })
         ])
@@ -65341,11 +65356,14 @@ var render = function() {
       _c("div", { staticClass: "col-md-3 col-sm-6" }, [
         _c("div", { staticClass: "insight-card ic-rec" }, [
           _c("span", { staticClass: "amt" }, [
-            _c("span", { staticClass: "rs" }, [_vm._v("Rs.")]),
-            _vm._v("\n          " + _vm._s(_vm.totalreceiving) + "\n        ")
+            _vm._v(
+              "\n          " +
+                _vm._s(_vm._f("toCurrency")(_vm.totalreceiving)) +
+                "\n        "
+            )
           ]),
           _vm._v(" "),
-          _c("span", { staticClass: "title" }, [_vm._v("Receiving")]),
+          _c("span", { staticClass: "title mt-3" }, [_vm._v("Receiving")]),
           _vm._v(" "),
           _c("div", { staticClass: "icon" })
         ])
@@ -65354,11 +65372,14 @@ var render = function() {
       _c("div", { staticClass: "col-md-3 col-sm-6" }, [
         _c("div", { staticClass: "insight-card ic-pay" }, [
           _c("span", { staticClass: "amt" }, [
-            _c("span", { staticClass: "rs" }, [_vm._v("Rs.")]),
-            _vm._v("\n          " + _vm._s(_vm.totalpaying) + "\n        ")
+            _vm._v(
+              "\n          " +
+                _vm._s(_vm._f("toCurrency")(_vm.totalpaying)) +
+                "\n        "
+            )
           ]),
           _vm._v(" "),
-          _c("span", { staticClass: "title" }, [_vm._v("Paying")]),
+          _c("span", { staticClass: "title mt-3" }, [_vm._v("Paying")]),
           _vm._v(" "),
           _c("div", { staticClass: "icon" })
         ])
@@ -65370,9 +65391,9 @@ var render = function() {
         "div",
         { staticClass: "row" },
         [
-          _c("earning", { on: { totalearning: _vm.earning } }),
+          _c("earning", { key: _vm.index, on: { totalearning: _vm.earning } }),
           _vm._v(" "),
-          _c("expense", { on: { totalexpense: _vm.expense } })
+          _c("expense", { key: _vm.index, on: { totalexpense: _vm.expense } })
         ],
         1
       ),
@@ -65381,9 +65402,12 @@ var render = function() {
         "div",
         { staticClass: "row" },
         [
-          _c("receive", { on: { totalreceive: _vm.receiving } }),
+          _c("receive", {
+            key: _vm.index,
+            on: { totalreceive: _vm.receiving }
+          }),
           _vm._v(" "),
-          _c("paying", { on: { totalpaying: _vm.paying } })
+          _c("paying", { key: _vm.index, on: { totalpaying: _vm.paying } })
         ],
         1
       )
@@ -81666,8 +81690,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _filter_filter__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./filter/filter */ "./resources/js/filter/filter.js");
 /* harmony import */ var _assets_css_style_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./assets/css/style.css */ "./resources/js/assets/css/style.css");
 /* harmony import */ var _assets_css_style_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_assets_css_style_css__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var bootstrap_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! bootstrap-vue */ "./node_modules/bootstrap-vue/esm/index.js");
@@ -81686,11 +81709,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.productionTip = false;
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('formatDate', function (value) {
-  if (value) {
-    return moment__WEBPACK_IMPORTED_MODULE_5___default()(value).format("MMM Do YY");
-  }
-});
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.prototype.$http = axios__WEBPACK_IMPORTED_MODULE_4___default.a;
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_7__["BootstrapVue"]);
 new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
@@ -82163,6 +82181,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_receiving_vue_vue_type_template_id_58c86d25_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/filter/filter.js":
+/*!***************************************!*\
+  !*** ./resources/js/filter/filter.js ***!
+  \***************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
+
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('formatDate', function (value) {
+  if (value) {
+    return moment__WEBPACK_IMPORTED_MODULE_1___default()(value).format("MMM Do YY");
+  }
+});
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('toCurrency', function (value) {
+  if (typeof value !== "number") {
+    return value;
+  }
+
+  var formatter = new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR'
+  });
+  return formatter.format(value);
+});
 
 /***/ }),
 
