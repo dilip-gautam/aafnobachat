@@ -14,11 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('login', 'UserController@login');
+Route::post('register', 'UserController@register');
 
-Route::resource('earning','EarningController');
-Route::resource('expense','ExpenseController');
-Route::resource('receive','ReceiveController');
-Route::resource('paying','PayingController');
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::resource('earning', 'EarningController');
+    Route::resource('expense', 'ExpenseController');
+    Route::resource('receive', 'ReceiveController');
+    Route::resource('paying', 'PayingController');
+});
