@@ -21,9 +21,7 @@ Route::post('register', 'UserController@register');
 //     return $request->user();
 // });
 
-Route::group(['middleware' => 'auth:api'], function () {
-    Route::resource('earning', 'EarningController');
-    Route::resource('expense', 'ExpenseController');
-    Route::resource('receive', 'ReceiveController');
-    Route::resource('paying', 'PayingController');
-});
+Route::resource('earning', 'EarningController');
+Route::resource('expense', 'ExpenseController');
+Route::resource('receive', 'ReceiveController');
+Route::resource('paying', 'PayingController');
