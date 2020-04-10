@@ -2001,12 +2001,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     addEarnings: function addEarnings() {
+      var _this = this;
+
       _axios_axios__WEBPACK_IMPORTED_MODULE_0__["default"].post("/earning", {
         items: this.earningdetail,
         amount: this.earningamount
       }).then(function (response) {
-        // this.$parent.rerun()
-        vm.$forceupdate();
+        _this.$parent.rerun();
       });
       this.earningdetail = null, this.earningamount = null;
     },
@@ -2026,12 +2027,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   watch: {},
   mounted: function mounted() {
-    var _this = this;
+    var _this2 = this;
 
     _axios_axios__WEBPACK_IMPORTED_MODULE_0__["default"].get("/earning").then(function (response) {
       console.log(response.data.data);
       response.data.data.map(function (element) {
-        return _this.earning.push(element);
+        return _this2.earning.push(element);
       });
     });
   }

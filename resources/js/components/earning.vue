@@ -66,8 +66,7 @@ export default {
           amount: this.earningamount
         })
         .then(response => {
-          // this.$parent.rerun()
-          vm.$forceupdate();
+          this.$parent.rerun()
         });
       (this.earningdetail = null), (this.earningamount = null);
     },
