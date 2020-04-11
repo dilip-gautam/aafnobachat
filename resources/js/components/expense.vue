@@ -5,10 +5,10 @@
         <h5 class="d-flex justify-content-between">
           <div class="card-title p-2 bd-highlight">Expenses Detail</div>
           <div class="d-flex">
-            <div class="card-total p-2 bd-highlight">Rs {{totalexpense}}</div>
+            <div class="card-total p-2 bd-highlight">{{ totalexpense | toCurrency }}</div>
             <b-button class="btn btn-info btn-add" v-b-modal.modal-2>Add</b-button>
 
-            <b-modal id="modal-2" hide-footer title="Add Details">
+            <b-modal ref="modal-second" id="modal-2" hide-footer title="Add Details">
               <form @submit.prevent="addexpenses">
                 <div class="form-group">
                   <label for="item name">Item Name</label>
@@ -52,6 +52,7 @@ import axios from "../axios/axios";
 export default {
   data() {
     return {
+      testa: [],
       expense: [],
       expensedetail: null,
       expenseamount: null
@@ -65,12 +66,10 @@ export default {
           amount: this.expenseamount
         })
         .then(response => {
-          this.$parent.rerun();
+          this.expense.push(response.data.data);
+          this.$refs["modal-second"].hide();
         });
       (this.expensedetail = null), (this.expenseamount = null);
-    },
-    hideModal() {
-      this.$refs["test"].hide();
     },
     deleteExpense(value) {
       axios.delete("/expense/" + value).then(response => {

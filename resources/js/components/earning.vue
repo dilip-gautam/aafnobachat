@@ -5,9 +5,9 @@
         <h5 class="d-flex justify-content-between">
           <div class="card-title p-2">Earnings Detail</div>
           <div class="d-flex">
-            <div class="card-total p-2 bd-highlight">Rs {{totalearning}}</div>
+            <div class="card-total p-2 bd-highlight">{{ totalearning | toCurrency}}</div>
             <b-button class="btn btn-info btn-add" v-b-modal.modal-1>Add</b-button>
-            <b-modal ref="test" id="modal-1" hide-footer title="Add Details">
+            <b-modal ref="modal-first" id="modal-1" hide-footer title="Add Details">
               <form @submit.prevent="addEarnings">
                 <div class="form-group">
                   <label for="item name">Item Name</label>
@@ -36,7 +36,7 @@
         </h5>
         <div v-for="data in earning" :key="data.id">
           <div class="d-flex justify-content-between">
-            <span>{{ data.item }}</span>
+            <span>{{ data.items }}</span>
             <span>{{ data.amount | toCurrency }}</span>
           </div>
           <div class="d-flex justify-content-between">
@@ -71,12 +71,13 @@ export default {
           amount: this.earningamount
         })
         .then(response => {
-          this.$parent.rerun();
+           this.earning.push(response.data.data);
+           this.$refs["modal-first"].hide();
         });
       (this.earningdetail = null), (this.earningamount = null);
     },
     hideModal() {
-      this.$refs["test"].hide();
+      this.$refs["modal-first"].hide();
     },
     deleteItem(value) {
       axios.delete("/earning/" + value).then(response => {

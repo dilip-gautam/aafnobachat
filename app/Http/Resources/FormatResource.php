@@ -17,7 +17,7 @@ class FormatResource extends JsonResource
         //return parent::toArray($request);
         return[
             'id' => $this->id,
-            'item' => $this->items,
+            'items' => $this->items,
             'amount' => $this ->amount,
             'created_at' => $this->created_at, 
         ];

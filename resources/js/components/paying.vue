@@ -6,10 +6,10 @@
         <h5 class="d-flex justify-content-between">
           <div class="card-title p-2 bd-highlight">Paying Detail</div>
           <div class="d-flex">
-            <div class="card-total p-2 bd-highlight">Rs {{totalpaying}}</div>
+            <div class="card-total p-2 bd-highlight">Rs {{totalpaying | toCurrency}}</div>
             <b-button class="btn btn-info btn-add" v-b-modal.modal-3>Add</b-button>
 
-            <b-modal id="modal-4" hide-footer title="Add Details">
+            <b-modal ref="modal-third" id="modal-4" hide-footer title="Add Details">
               <form @submit.prevent="addpayings">
                 <div class="form-group">
                   <label for="item name">Item Name</label>
@@ -66,7 +66,9 @@ export default {
           amount: this.payingamount
         })
         .then(response => {
-          this.$parent.rerun();
+          // this.$parent.rerun();
+          this.paying.push(response.data.data);
+          this.$refs["modal-third"].hide();
         });
       (this.payingdetail = null), (this.payingamount = null);
     },
