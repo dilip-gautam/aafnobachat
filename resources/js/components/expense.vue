@@ -8,8 +8,29 @@
             <div class="card-total p-2 bd-highlight">{{ totalexpense | toCurrency }}</div>
             <b-button class="btn btn-info btn-add" v-b-modal.modal-2>Add</b-button>
 
+            <!-- Create a new item -->
             <b-modal ref="modal-second" id="modal-2" hide-footer title="Add Details">
               <form @submit.prevent="addexpenses">
+                <div class="form-group">
+                  <label for="item name">Item Name</label>
+                  <input type="text" class="form-control" id="item name" v-model="expensedetail" />
+                </div>
+                <div class="form-group">
+                  <label for="amount">Amount</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="expenseamount"
+                    v-model="expenseamount"
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </b-modal>
+
+            <!-- update a data -->
+            <b-modal ref="modal-secondU" id="modal-2U" hide-footer title="Add Details">
+              <form @submit.prevent="updateItem">
                 <div class="form-group">
                   <label for="item name">Item Name</label>
                   <input type="text" class="form-control" id="item name" v-model="expensedetail" />
@@ -35,9 +56,14 @@
           </div>
           <div class="d-flex justify-content-between">
             <span class="trans-date">{{ new Date(data.created_at) | formatDate }}</span>
-            <a @click="deleteExpense(data.id)">
-              <font-awesome-icon icon="trash" />
-            </a>
+            <span>
+              <a class="p-2" @click="editItem(data.id)">
+                <font-awesome-icon icon="edit" />
+              </a>
+              <a class="p-2" @click="deleteItem(data.id)">
+                <font-awesome-icon icon="trash" />
+              </a>
+            </span>
           </div>
           <hr />
         </div>
@@ -52,6 +78,7 @@ import axios from "../axios/axios";
 export default {
   data() {
     return {
+      index: 0,
       testa: [],
       expense: [],
       expensedetail: null,
@@ -79,6 +106,41 @@ export default {
           }
         });
       });
+    },
+    editItem(value) {
+      axios.get("/expense/" + value).then(response => {
+        (this.index = response.data.data.id),
+          (this.expensedetail = response.data.data.items),
+          (this.expenseamount = response.data.data.amount);
+      });
+      this.$refs["modal-secondU"].show();
+    },
+    updateItem() {
+      axios
+        .patch("/expense/" + this.index, {
+          items: this.expensedetail,
+          amount: this.expenseamount
+        })
+        .then(response => {
+          // this.$set(this.earning,)
+          // this.earning.map(element => {
+          //   console.log(element)
+          // });
+          this.expense.forEach(element => {
+            // console.log(element.id);
+            // console.log(this.index);
+            if (element.id == this.index) {
+              // console.log(this.expensedetail);
+              element.items = this.expensedetail;
+              element.amount = this.expenseamount;
+              // console.log(element);
+              // console.log("aa");
+            }
+          });
+          // console.log("a");
+          this.$refs["modal-secondU"].hide();
+        });
+      // (this.expensedetail = null), (this.expenseamount = null);
     }
   },
   computed: {
