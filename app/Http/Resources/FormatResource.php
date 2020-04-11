@@ -18,7 +18,7 @@ class FormatResource extends JsonResource
         return[
             'id' => $this->id,
             'items' => $this->items,
-            'amount' => $this ->amount,
+            'amount' => (integer)$this ->amount,
             'created_at' => $this->created_at, 
         ];
     }

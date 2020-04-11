@@ -100,12 +100,12 @@
     </div>-->
     <div class="container mt-4">
       <div class="row">
-        <earning @totalearning="earning" :key="index"></earning>
-        <expense @totalexpense="expense" :key="index"></expense>
+        <earning @totalearning="earning" ></earning>
+        <expense @totalexpense="expense" ></expense>
       </div>
       <div class="row">
-        <receive @totalreceive="receiving" :key="index"></receive>
-        <paying @totalpaying="paying" :key="index"></paying>
+        <receive @totalreceive="receiving" ></receive>
+        <paying @totalpaying="paying" ></paying>
       </div>
     </div>
   </div>

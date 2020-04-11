@@ -6,7 +6,7 @@
         <h5 class="d-flex justify-content-between">
           <div class="card-title p-2 bd-highlight">Paying Detail</div>
           <div class="d-flex">
-            <div class="card-total p-2 bd-highlight">Rs {{totalpaying | toCurrency}}</div>
+            <div class="card-total p-2 bd-highlight">{{totalpaying | toCurrency}}</div>
             <b-button class="btn btn-info btn-add" v-b-modal.modal-3>Add</b-button>
 
             <b-modal ref="modal-third" id="modal-4" hide-footer title="Add Details">
