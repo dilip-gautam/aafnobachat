@@ -58,14 +58,14 @@
             <span class="trans-date">{{ new Date(data.created_at) | formatDate }}</span>
             <span>
               <a class="p-2" @click="editItem(data.id)">
-                <font-awesome-icon icon="edit" />
+                <font-awesome-icon class="edit" icon="edit" />
               </a>
-              <a class="p-2" @click="deleteItem(data.id)">
-                <font-awesome-icon icon="trash" />
+              <a class="p-2" @click="deleteExpense(data.id)">
+                <font-awesome-icon class="trash" icon="trash" />
               </a>
             </span>
           </div>
-          <hr />
+          <hr>
         </div>
       </div>
     </div>
@@ -152,15 +152,6 @@ export default {
       this.$emit("totalexpense", total);
       return total;
     },
-    deleteItem(value) {
-      axios.delete("/earning/" + value).then(response => {
-        this.earning.map((element, index) => {
-          if (element.id == value) {
-            this.earning.splice(index, 1);
-          }
-        });
-      });
-    }
   },
   watch: {},
   mounted() {

@@ -21,4 +21,10 @@ export default {
 </script>
 
 <style>
+.trash:hover{
+  color: red;
+}
+.edit:hover{
+  color: skyblue;
+}
 </style>

@@ -65,10 +65,10 @@
             <span class="trans-date">{{ new Date(data.created_at) | formatDate }}</span>
             <span>
               <a class="p-2" @click="editItem(data.id)">
-                <font-awesome-icon icon="edit" />
+                <font-awesome-icon class="edit" icon="edit" />
               </a>
               <a class="p-2" @click="deleteItem(data.id)">
-                <font-awesome-icon icon="trash" />
+                <font-awesome-icon class="trash" icon="trash" />
               </a>
             </span>
           </div>

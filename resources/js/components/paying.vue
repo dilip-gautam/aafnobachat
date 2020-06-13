@@ -58,10 +58,10 @@
             <span class="trans-date">{{ new Date(data.created_at) | formatDate }}</span>
             <span>
               <a class="p-2" @click="editPaying(data.id)">
-                <font-awesome-icon icon="edit" />
+                <font-awesome-icon class="edit" icon="edit" />
               </a>
               <a class="p-2" @click="deletePaying(data.id)">
-                <font-awesome-icon icon="trash" />
+                <font-awesome-icon class="trash" icon="trash" />
               </a>
             </span>
           </div>
@@ -87,7 +87,7 @@ export default {
   methods: {
     addpayings() {
       axios
-        .post("/paying", {
+        .post("/paying/", {
           items: this.payingdetail,
           amount: this.payingamount
         })
