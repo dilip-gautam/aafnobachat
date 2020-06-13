@@ -79,11 +79,6 @@ GET api/earning/
 POST api/paying/
 ```
 
-## App Info
-### Version
-
-0.0.1
-
 ### License
 
 This project is licensed under the MIT License
