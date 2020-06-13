@@ -161,6 +161,10 @@ export default {
 };
 </script>
 <style scoped>
+.app-title{
+  font-size: 16px;
+}
+
 .final-insight-amount {
   color: #fff;
   font-size: 48px;
@@ -248,5 +252,12 @@ export default {
 }
 .ic-pay .icon {
   background: url("../assets/img/pay-icon.png") no-repeat;
+}
+
+@media only screen and (max-width: 800px) {
+  .app-title{
+    padding-bottom:20px;
+    text-align: center;
+  }
 }
 </style>

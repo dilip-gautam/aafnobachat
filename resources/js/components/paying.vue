@@ -6,7 +6,7 @@
           <div class="card-title p-2 bd-highlight">Paying Detail</div>
           <div class="d-flex">
             <div class="card-total p-2 bd-highlight">{{totalpaying | toCurrency}}</div>
-            <b-button class="btn btn-info btn-add" v-b-modal.modal-3>Add</b-button>
+            <b-button class="btn btn-info btn-add" v-b-modal.modal-4>Add</b-button>
 
             <!-- add a data -->
             <b-modal ref="modal-third" id="modal-4" hide-footer title="Add Details">
@@ -87,7 +87,7 @@ export default {
   methods: {
     addpayings() {
       axios
-        .post("/paying/", {
+        .post("/expense/", {
           items: this.payingdetail,
           amount: this.payingamount
         })
@@ -127,6 +127,7 @@ export default {
         });
     },
     deletePaying(value) {
+      console.log('deleted');
       axios.delete("/paying/" + value).then(response => {
         this.paying.map((element, index) => {
           if (element.id == value) {
